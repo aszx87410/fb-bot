@@ -1,4 +1,5 @@
 # Facebook 聊天機器人簡單範例
+修改自 [Facebook 官方文件](https://developers.facebook.com/docs/messenger-platform/quickstart)
 
 ## 使用
 
