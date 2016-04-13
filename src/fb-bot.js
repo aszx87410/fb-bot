@@ -15,6 +15,8 @@ app.get('/webhook/', (req, res) => {
 
 app.post('/webhook/', (req, res) => {
 
+  console.log(req.body);
+  
   const messaging_events = req.body.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
     const event = req.body.entry[0].messaging[i];
