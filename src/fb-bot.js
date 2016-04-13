@@ -7,7 +7,7 @@ const VERIFY_TOKEN = config.VERIFY_TOKEN;
 const PAGE_TOKEN = config.PAGE_TOKEN;
 
 app.get('/webhook/', (req, res) => {
-  if (req.query['hub.verify_token'] === TOKEN) {
+  if (req.query['hub.verify_token'] === VERIFY_TOKEN) {
     res.send(req.query['hub.challenge']);
   }
   res.send('Error, wrong validation token');
