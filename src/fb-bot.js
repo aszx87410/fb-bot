@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import request from 'request';
 import config from '../config';
 
 const app = express();
