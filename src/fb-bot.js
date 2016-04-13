@@ -1,10 +1,14 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import config from '../config';
 
 const app = express();
 const port = '7123';
 const VERIFY_TOKEN = config.VERIFY_TOKEN;
 const PAGE_TOKEN = config.PAGE_TOKEN;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/webhook/', (req, res) => {
   if (req.query['hub.verify_token'] === VERIFY_TOKEN) {
@@ -16,7 +20,7 @@ app.get('/webhook/', (req, res) => {
 app.post('/webhook/', (req, res) => {
 
   console.log(req.body);
-  
+
   const messaging_events = req.body.entry[0].messaging;
   for (i = 0; i < messaging_events.length; i++) {
     const event = req.body.entry[0].messaging[i];
@@ -29,6 +33,7 @@ app.post('/webhook/', (req, res) => {
   res.sendStatus(200);
 });
 
+app.listen(port, () => console.log(`listening on port ${port}`));
 
 function sendTextMessage(sender, text) {
   messageData = {
@@ -50,5 +55,3 @@ function sendTextMessage(sender, text) {
     }
   });
 }
-
-app.listen(port, () => console.log(`listening on port ${port}`));
