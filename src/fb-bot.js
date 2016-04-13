@@ -22,11 +22,11 @@ app.post('/webhook/', (req, res) => {
   console.log(req.body);
 
   const messaging_events = req.body.entry[0].messaging;
-  for (i = 0; i < messaging_events.length; i++) {
+  for (let i = 0; i < messaging_events.length; i++) {
     const event = req.body.entry[0].messaging[i];
     const sender = event.sender.id;
     if (event.message && event.message.text) {
-      text = event.message.text;
+      const text = event.message.text;
       sendTextMessage(sender, "Text received, echo: "+ text.substring(0, 200));
     }
   }
@@ -36,15 +36,21 @@ app.post('/webhook/', (req, res) => {
 app.listen(port, () => console.log(`listening on port ${port}`));
 
 function sendTextMessage(sender, text) {
-  messageData = {
-    text:text
+  
+  const messageData = {
+    text: text
   }
+
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token:PAGE_TOKEN},
+    qs: {
+        access_token:PAGE_TOKEN
+    },
     method: 'POST',
     json: {
-      recipient: {id:sender},
+      recipient: {
+        id: sender
+      },
       message: messageData,
     }
   }, function(error, response, body) {
